@@ -1,0 +1,119 @@
+<mat-card class="w-full max-w-3xl p-6 rounded-2xl shadow-lg bg-white">
+  <!-- Header -->
+  <div class="flex justify-between items-start">
+    <h2 mat-card-title class="text-2xl font-semibold text-gray-800">
+      {{ movie()?.title }}
+    </h2>
+    <button mat-icon-button (click)="close()" aria-label="Close">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="flex flex-col sm:flex-row gap-6 mt-6">
+    <div class="flex flex-col items-center gap-6 sm:w-40">
+      <img
+        [src]="'https://image.tmdb.org/t/p/w500' + movie()?.poster_path"
+        [alt]="movie()?.title || 'Movie poster'"
+        class="w-32 sm:w-40 h-48 sm:h-60 rounded-lg object-cover"
+      />
+
+      <div class="w-full">
+        <div class="flex items-center justify-center gap-1">
+          <ng-container *ngFor="let starIndex of [0, 1, 2, 3, 4]">
+            <div class="relative w-8 h-8 text-2xl select-none">
+              <!-- Gray placeholder star -->
+              <span class="text-gray-300 absolute top-0 left-0">★</span>
+
+              <!-- Filled portion -->
+              <ng-container [ngSwitch]="getStarFill(starIndex)">
+                <!-- Full star -->
+                <span *ngSwitchCase="StarFill.Full"
+                      [class]="isWholeNumberRating() ? 'text-amber-500' : 'text-amber-400'"
+                      class="absolute top-0 left-0">★</span>
+
+                <!-- Half star -->
+                <span *ngSwitchCase="StarFill.Half" class="absolute top-0 left-0 overflow-hidden"
+                      [style.width]="'35%'" [style.color]="isWholeNumberRating() ? '#f59e0b' : '#fbbf24'">
+                  ★
+                </span>
+              </ng-container>
+
+              <!-- Clickable areas -->
+              <div class="absolute top-0 left-0 w-full h-full flex">
+                <div class="w-1/2 h-full cursor-pointer"
+                     (click)="setRating(starIndex * 2 + 1)"
+                     (mouseenter)="setDisplayRating(starIndex * 2 + 1)"
+                     (mouseleave)="resetDisplayRating()"
+                     [matTooltip]="(starIndex * 2 + 1) + '/10'"></div>
+                <div class="w-1/2 h-full cursor-pointer"
+                     (click)="setRating(starIndex * 2 + 2)"
+                     (mouseenter)="setDisplayRating(starIndex * 2 + 2)"
+                     (mouseleave)="resetDisplayRating()"
+                     [matTooltip]="(starIndex * 2 + 2) + '/10'"></div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+        <div class="text-center mt-2">
+          <span class="text-sm text-slate-500">
+            {{ displayRating() || rating() || 'Not rated' }}/10
+          </span>
+        </div>
+
+        <div class="flex flex-col items-center mt-4">
+          <button
+            mat-flat-button
+            color="primary"
+            (click)="submitRating()"
+            [disabled]="!rating()"
+            class="w-full"
+          >
+          {{ 'MOVIES-SUBMIT_RATING' | translate }}
+          </button>
+          <span class="text-sm text-gray-500 mt-2 text-center">{{ feedback() }}</span>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="flex-1 flex flex-col gap-4">
+      <p class="text-sm text-gray-800">
+        {{ movie()?.overview }}
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-700">
+        <div>
+          <span class="font-semibold text-gray-900">{{ 'MOVIES-BUDGET' | translate }}:</span>
+          {{ movie()?.budget | currency }}
+        </div>
+
+        <div>
+          <span class="font-semibold text-gray-900">{{ 'MOVIES-REVENUE' | translate }}:</span>
+          {{ movie()?.revenue | currency }}
+        </div>
+
+        <div>
+          <span class="font-semibold text-gray-900">{{ 'MOVIES-RELEASE_DATE' | translate }}
+            :</span>
+          {{ movie()?.release_date | date }}
+        </div>
+
+        <div>
+          <span class="font-semibold text-gray-900">{{ 'MOVIES-VOTE_AVERAGE' | translate }}</span>
+          {{ movie()?.vote_average | truncateDecimal:1 }} / 10
+        </div>
+
+        <div>
+          <span class="font-semibold text-gray-900">{{ 'MOVIES-VOTE_COUNT' | translate }}:</span>
+          {{ movie()?.vote_count }}
+        </div>
+
+        <div>
+          <span class="font-semibold text-gray-900">{{ 'MOVIES-LANGUAGES' | translate }}:</span>
+          {{ getSpokenLanguages() }}
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-card>

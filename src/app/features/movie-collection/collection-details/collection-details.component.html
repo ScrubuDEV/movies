@@ -1,0 +1,54 @@
+<div class="p-4">
+  <div class="flex justify-between items-center mb-4">
+    <button mat-button (click)="cancel()">
+      <mat-icon>arrow_back</mat-icon>
+      {{ 'MOVIES-BACK_TO_COLLECTIONS' | translate }}
+    </button>
+    <h1 class="text-2xl font-bold">{{ collection?.title || ('MOVIES-LOADING' | translate) }}</h1>
+  </div>
+
+  <p class="text-gray-600 mb-6" *ngIf="collection?.description">
+    {{ collection?.description }}
+  </p>
+
+  <div *ngIf="isLoading" class="flex flex-col items-center justify-center py-8">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p class="mt-4 text-gray-500">{{ 'MOVIES-LOADING_COLLECTION' | translate }}</p>
+  </div>
+
+  <div *ngIf="!isLoading">
+    <h2 class="text-xl font-semibold mb-4">
+      {{ 'MOVIES-IN_COLLECTION' | translate }}
+      <span *ngIf="movies$ | async as movies">({{ movies.length }})</span>
+    </h2>
+
+    <ng-container *ngIf="movies$ | async as movies">
+      <div *ngIf="movies.length === 0" class="text-center text-gray-500 py-8">
+        {{ 'MOVIES-NO_MOVIES_IN_COLLECTION' | translate }}
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <mat-card *ngFor="let movie of movies" class="h-full flex flex-col">
+          <img
+            *ngIf="movie.poster_path"
+            [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path"
+            class="aspect-[2/3] w-full object-cover"
+            [alt]="movie.title"
+          />
+          <div class="p-2 flex-grow">
+            <h3 class="text-lg font-semibold">{{ movie.title }}</h3>
+            <p class="text-sm text-gray-500">{{ movie.release_date | date: 'yyyy' }}</p>
+          </div>
+          <mat-card-actions class="flex justify-between p-2">
+            <button mat-button color="primary" (click)="viewMovieDetails(movie.id)">
+              {{ 'MOVIES-VIEW_DETAILS' | translate }}
+            </button>
+            <button mat-icon-button color="warn" (click)="removeMovie(movie.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </ng-container>
+  </div>
+</div>

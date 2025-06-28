@@ -1,0 +1,27 @@
+.star-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+}
+
+.gray-star {
+  position: absolute;
+  left: 0;
+  color: #e2e8f0; /* gray-200 */
+}
+
+.colored-half {
+  position: absolute;
+  left: 0;
+  width: 50%;
+  overflow: hidden;
+}
+
+/* For the right half of partial stars */
+.colored-half::before {
+  content: '★';
+  position: absolute;
+  left: 0;
+  width: 200%;
+}

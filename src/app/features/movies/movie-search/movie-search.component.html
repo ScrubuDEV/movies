@@ -1,0 +1,46 @@
+<div class="flex justify-center my-6 px-4">
+  <mat-form-field appearance="outline" class="w-full max-w-2xl">
+    <mat-label>{{ 'MOVIES-SEARCH_MOVIES' | translate }}</mat-label>
+    <input matInput [formControl]="searchControl" placeholder="" class="placeholder-gray-400"/>
+    <button
+      mat-icon-button
+      matSuffix
+      (click)="loadPage(1, pageSize(), searchControl.value.trim())"
+      [disabled]="searchControl.invalid"
+      class="text-gray-500 hover:text-gray-700"
+    >
+      <mat-icon>search</mat-icon>
+    </button>
+    <mat-error *ngIf="searchControl.hasError('minlength')" class="text-red-500">
+      {{ 'MOVIES-AT_LEAST_3_CHARACTERS_REQUIRED' | translate }}
+    </mat-error>
+    <mat-error *ngIf="searchControl.hasError('pattern')" class="text-red-500">
+      {{ 'MOVIES-ONLY_LETTERS_AND_NUMBERS_ALLOWED' | translate }}
+    </mat-error>
+  </mat-form-field>
+</div>
+
+<div
+  class="grid gap-4 px-2 auto-rows-fr"
+  style="grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr))"
+>
+  <app-movie-item
+    *ngFor="let movie of movies()"
+    [movie]="movie"
+    (clicked)="goToDetail(movie)"
+    [collections]="collections"
+    (addedToCollection)="onAddToCollection(movie, $event)"
+    class="h-full"
+  ></app-movie-item>
+</div>
+
+<div class="flex justify-center my-6 bg-white p-4 rounded-lg shadow-sm">
+  <mat-paginator
+    [length]="totalResults()"
+    [pageSizeOptions]="[10, 20, 50]"
+    [pageSize]="pageSize()"
+    [pageIndex]="currentPage() - 1"
+    (page)="onPageChange($event)"
+    class="[&_.mat-mdc-paginator-range-actions]:gap-2"
+  ></mat-paginator>
+</div>

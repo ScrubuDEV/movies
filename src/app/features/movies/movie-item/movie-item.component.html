@@ -1,0 +1,72 @@
+<mat-card
+  class="relative flex flex-col h-full w-48 cursor-pointer transform transition duration-300 hover:-translate-y-1 hover:shadow-xl rounded-xl overflow-hidden group"
+  (click)="clicked.emit()"
+>
+  <div class="relative h-64 overflow-hidden flex-shrink-0">
+    <img
+      mat-card-image
+      [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+      [alt]="movie.title"
+      class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+      loading="lazy"
+      (load)="onImageLoad()"
+    />
+
+    <div
+      class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-2"
+    >
+      <div class="relative" (click)="$event.stopPropagation()">
+        <button
+          mat-raised-button
+          [matMenuTriggerFor]="menu"
+          class="!flex items-center !rounded-full !bg-white/90 hover:!bg-white !text-gray-900 !font-medium !shadow-md transition-all"
+        >
+          <mat-icon>add</mat-icon>
+          <span>{{ 'MOVIES-ADD_TO_COLLECTION' | translate }}</span>
+        </button>
+
+        <mat-menu #menu="matMenu">
+          <ng-container *ngIf="filteredCollections().length; else noCollections">
+            <button
+              mat-menu-item
+              *ngFor="let collection of filteredCollections()"
+              (click)="addToCollection(collection.id); $event.stopPropagation()"
+            >
+              {{ collection.title }}
+            </button>
+          </ng-container>
+          <ng-template #noCollections>
+            <span class="block px-4 py-2 text-sm text-gray-500">
+              {{ 'ΜOVIES-COLLECTIONS-NO_COLLECTIONS_AVAILABLE' | translate }}
+            </span>
+          </ng-template>
+        </mat-menu>
+      </div>
+    </div>
+  </div>
+
+  <mat-card-content class="flex flex-col flex-grow p-3 bg-white dark:bg-gray-800">
+    <h3 class="text-sm font-medium leading-tight mb-3 line-clamp-2 text-gray-900 dark:text-white">
+      {{ movie.title }}
+    </h3>
+
+    <div class="flex items-center justify-between mt-auto">
+      <div class="flex items-center space-x-1">
+        <mat-icon class="text-yellow-500">star</mat-icon>
+        <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">
+          {{ movie.vote_average | number: '1.1-1' }}
+        </span>
+      </div>
+
+      <button
+        mat-mini-fab
+        class="!w-8 !h-8 !shadow-sm !bg-gray-100 hover:!bg-gray-200 dark:!bg-gray-700 dark:hover:!bg-gray-600"
+        (click)="$event.stopPropagation(); clicked.emit()"
+        [matTooltip]="'MOVIES-VIEW_DETAILS' | translate"
+        aria-label="View details"
+      >
+        <mat-icon class="!text-base text-gray-800 dark:text-gray-200">chevron_right</mat-icon>
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>
