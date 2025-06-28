@@ -21,7 +21,7 @@ export class MovieSearchComponent implements OnInit {
 
   searchControl = new FormControl<string>('', {
     nonNullable: true,
-    validators: [Validators.minLength(3), Validators.pattern(/^[a-zA-Z0-9]+$/)],
+    validators: [Validators.minLength(3), Validators.pattern(/^[a-zA-Z0-9 ]+$/)],
   });
 
   response = signal<PagedResponse>({
