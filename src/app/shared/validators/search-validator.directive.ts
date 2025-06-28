@@ -1,4 +1,3 @@
-// src/app/shared/validators/search-validator.directive.ts
 import { Directive, forwardRef } from '@angular/core';
 import { AbstractControl, NG_VALIDATORS, ValidationErrors, Validator } from '@angular/forms';
 

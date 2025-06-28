@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { CollectionsService } from '../../../core/services/collections.service';
+import { Component } from "@angular/core";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import { CollectionsService } from "../../../../core/services/collections.service";
+
 
 @Component({
   selector: 'app-collection-create',
@@ -18,8 +19,8 @@ export class CollectionCreateComponent {
     private router: Router,
   ) {
     this.collectionForm = this.fb.group({
-      title: ['', Validators.required],
-      description: [''],
+      title: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(1)]],
+      description: ['', [Validators.maxLength(300)]], 
     });
   }
 

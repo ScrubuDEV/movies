@@ -15,9 +15,9 @@ export interface CollectionSearchResponse {
 }
 
 export interface LocalCollection {
-  id: string; // String for local IDs
+  id: string;
   title: string;
   description: string;
-  movie_ids: number[]; // Array of Movie IDs (renamed from 'movies' for clarity)
-  movies?: Movie[]; // Optional full movie data for display
+  movie_ids: number[];
+  movies?: Movie[]; 
 }

@@ -4,8 +4,7 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-  // Important for Material compatibility
   corePlugins: {
-    preflight: false, // Disable Tailwind's base styles to prevent conflicts
+    preflight: false,
   },
 };

@@ -1,4 +1,3 @@
-// movie-search.component.ts
 import { Component, OnInit, ViewChild, signal, computed, ChangeDetectorRef } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
@@ -122,7 +121,7 @@ export class MovieSearchComponent implements OnInit {
         this.snackBar.open('Movie added to collection', 'Close', {
           duration: 2000,
         });
-        this.loadCollections(); // Optional refresh
+        this.loadCollections();
         this.cdr.markForCheck();
       } else {
         this.snackBar.open('Movie already in collection', 'Close', {

@@ -1,13 +1,11 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { CollectionSummary, LocalCollection } from '../../core/models/collection.model';
-import { MovieService } from '../../core/services/movie.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { finalize, Subject, takeUntil } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CollectionsService } from '../../core/services/collections.service';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
-import { STORAGE_KEY } from '../../config/movies.constants';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { STORAGE_KEY } from '../../../config/movies.constants';
+import { LocalCollection } from '../../../core/models/collection.model';
+import { CollectionsService } from '../../../core/services/collections.service';
+import { ConfirmationDialogComponent } from '../../../shared/components/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-movie-collection',

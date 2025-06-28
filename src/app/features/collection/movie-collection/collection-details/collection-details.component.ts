@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { LocalCollection } from '../../../core/models/collection.model';
-import { CollectionsService } from '../../../core/services/collections.service';
-import { Movie } from '../../../core/models/movie.model';
-import { catchError, finalize, Observable, of, switchMap, take } from 'rxjs';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { Component, OnInit } from "@angular/core";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Observable, of } from "rxjs";
+import { LocalCollection } from "../../../../core/models/collection.model";
+import { Movie } from "../../../../core/models/movie.model";
+import { CollectionsService } from "../../../../core/services/collections.service";
+
 
 @Component({
   selector: 'app-collection-details',
